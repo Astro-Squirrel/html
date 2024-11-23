@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Registration Form</title>
+ <style>
+ body{
+ background-color: #18796c;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.form-container form{
+ background-color: rgb(230, 234, 238);
+ padding: 20px 30px 20px;
+ position: relative;
+ width: 100%;
+ border-radius: 4px;
+ box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+h1{
+ margin: 0px 0px 10px 0px;
+ padding: 0 100px;
+}
+.input-group{
+ width: 110%;
+ display: flex;
+ align-items: center;
+ margin: 16px 0;
+ position: relative;
+}
+.input-group label{
+ flex-basis: 18%;
+}
+.input-group input, .input-group textarea{
+ flex-basis: 40%;
+ border: 0;
+ outline: 0;
+ padding: 10px 0;
+ border-bottom: 1px solid #999;
+ background-color: rgb(247, 244, 244);
+ color: rgb(0, 0, 0);
+ font-size: 16px;
+}
+::placeholder{
+ font-size: 14px;
+}
+form button{
+ background: #141a34;
+ color: #fff;
+ border-radius: 4px;
+ border: 1px solid rgba(255, 255, 255, 0.7);
+ padding: 10px 40px;
+ outline: 0;
+ cursor: pointer;
+ display: block;
+ margin: 30px auto 10px;
+}
+.input-group span{
+ font-size: 14px;
+ color: red;
+}
+#submit-error{
+ color: red;
+}
+img{
+ width: 100%;
+ height: 30px;
+}
+</style>
+</head>
+<body>
+ <div class="form-container">
+ <h1>Student Registration Form</h1>
+ <form action="registration-success.html">
+ <div class="input-group">
+ <label><strong>First Name:</strong></label>
+ <input type="text" placeholder="Enter Your First Name" id="fname">
+ <span id="fname-error"></span>
+ </div>
+ 
+ <div class="input-group">
+ <label><strong>Last Name:</strong></label>
+ <input type="text" placeholder="Enter Your Last Name" id="lname">
+ <span id="lname-error"></span>
+ </div>
+ 
+ <div class="input-group">
+ <label><strong>Date of Birth:</strong></label>
+ <input type="date" id="dob" onchange="validateDOB()">
+ <span id="dob-error"></span>
+ </div> 
+ <div class="input-group">
+ <label><strong>Email Id:</strong></label>
+ <input type="email" placeholder="Enter Your Email Id" id="email-id">
+ <span id="email-error"></span>
+ </div>
+ <div class="input-group">
+ <label><strong>Mobile No.:</strong></label>
+ <input type="tel" placeholder="Enter your mobile number" 
+id="phone-no">
+ <span id="mobile-error"></span>
+ </div>
+ <div class="input-group">
+ <label><strong>Gender:</strong></label>
+ <input type="radio" style="flex-basis: 0%; margin: 0 10px;" 
+name="gender" value="male" id="male">
+ <label for="male">Male</label> 
+ <input type="radio" style="flex-basis: 0%; margin: 0 
+10px;"name="gender" value="female" id="female">
+ <label for="female">Female</label> 
+ <span id="gender-error"></span>
+ </div> 
+ <div class="input-group">
+ <label><strong>Country:</strong></label>
+ <select name="country" id="country-name">
+ <option value="" selected="selected" >Select Country</option>
+ </select>
+ <span id="country-error"></span>
+ </div> 
+ <div class="input-group">
+ <label><strong>State:</strong></label>
+ <select name="state" id="state-name">
+ <option value="" selected="selected">Please select country 
+first</option>
+ </select>
+ <span id="state-error"></span>
+ </div> 
+ <div class="input-group">
+ <label><strong>Address:</strong></label>
+ <input type="text" placeholder="Enter Your Address" id="address">
+ <span id="address-error"></span>
+ </div>
+ <div class="input-group">
+ <label><strong>Pin Code:</strong></label>
+ <input type="text" placeholder="Enter Your Pin Code" id="pincode">
+ <span id="pin-error"></span>
+ </div> 
+ <div class="input-group">
+ <label><strong>City:</strong></label>
+ <input type="text" placeholder="Enter Your City" id="city">
+ <span id="city-error"></span>
+ </div>
+ <div class="input-group">
+ <label><strong>District:</strong></label>
+ <select name="district" id="district-name">
+ <option value="" selected="selected">Please select state 
+first</option>
+ </select>
+ <span id="district-error"></span>
+ </div> 
+ 
+ <div class="input-group">
+ <label><strong>Hobbies:</strong></label>
+ <textarea rows="5" placeholder="Enter Your Hobbies" 
+id="hobbies"></textarea>
+ <span id="hobbies-error"></span>
+ </div>
+ 
+ <button>Submit</button>
+ <span id="submit-error"></span>
+ 
+ </form>
+ </div>
+ <script>
+var fnameError = document.getElementById('fname-error');
+var lnameError = document.getElementById('lname-error');
+var dobError = document.getElementById('dob-error');
+var emailError = document.getElementById('email-error');
+var genderError = document.getElementById('gender-error');
+var mobileError = document.getElementById('mobile-error');
+var countryError = document.getElementById('country-error');
+var stateError = document.getElementById('state-error');
+var addressError = document.getElementById('address-error');
+var pinCodeError = document.getElementById('pin-error');
+var cityError = document.getElementById('city-error');
+var districtError = document.getElementById('district-error');
+var hobbiesError = document.getElementById('hobbies-error');
+var submitError = document.getElementById('submit-error');
+var addressObject = {
+ "INDIA": {
+ "Assam": ["Bongaigaon", "Jorhat", "Kokrajhar", "Lakhimpur", "Tinsukia", 
+"Kamrup Metropolitan"],
+ "Goa": ["North Goa", "South Goa"],
+ "Himachal Pradesh": ["Kangra", "Kullu", "Mandi", "Shimla", "Lahaul and 
+Spiti", "Kinnaur"], 
+ "Kerela": ["Kollam", "Malappuram", "Thiruvananthapuram", "Kannur", 
+"Palakkad"], 
+ "Tripura": ["Dhalai", "North Tripura", "South Tripura", "West Tripura"],
+ 
+ "Sikkim": ["Gangtok", "Mangan", "Namchi", "Geyzing", "Pakyong", 
+"Soreng"], 
+ "West Bengal": ["Malda", "Alipurduar", "Howrah", "Kolkata", "Bankura", 
+"Nadia"],
+ "Delhi": ["Central Delhi", "East Delhi", "New Delhi", "North Delhi", 
+"South Delhi", "West Delhi"] 
+ },
+ "USA": {
+ "Arizona": ["Gila", "Yuma", "Apache", "Mohave", "Santa Cruz", 
+"Greenlee"],
+ "California": ["San Francisco", "Los Angeles", "Sacramento", "San 
+Diego", "Riverside", "San Jose"],
+ "Georgia": ["Atlanta", "Augusta", "Columbus", "Savannah"],
+ "Michigan": ["Watersmeet", "Holland", "Flint", "Holly", "Dearborn"],
+ "New York": ["Shirley", "Brooklyn", "Manhattan", "Bronx", "Yonkers"],
+ "Washington": ["Pierce", "Yakima", "Thurston", "Snohomish"],
+ "New Mexico": ["Alamogordo", "Santa Fe", "Albuquerque"]
+ },
+ "BANGLADESH": {
+ "Barisal": ["Barisal", "Barguna", "Bhola", "Pirojpur", "Jhalokati", 
+"Patuakhali"],
+ "Khulna": ["Bagerhat", "Jashore", "Khulna", "Narail", "Satkhira", 
+"Meherpur"],
+ "Rajshahi": ["Natore", "Sirajganj", "Pabna", "Bogura", "Naogaon", 
+"Joypurhat"],
+ "Rangpur": ["Dinajpur", "Kurigram", "Rangpur", "Thakurgaon", 
+"Panchagarh", "Gaibandha"],
+ "Sylhet": ["Habiganj", "Moulvibazar", "Sunamganj", "Sylhet"],
+ "Dhaka": ["Gazipur", "Tangail", "Rajbari", "Gopalganj", "Faridpur", 
+"Narayanganj"],
+ "Chittagong": ["Rangamati", "Cox's Bazar", "Chattogram", "Lakshmipur",
+"Chandpur", "Brahmanbaria"]
+ }
+}
+window.onload = function(){
+ var countrySel = document.getElementById("country-name");
+ var stateSel = document.getElementById("state-name");
+ var districtSel = document.getElementById("district-name");
+ for(var x in addressObject){
+ countrySel.options[countrySel.options.length] = new Option(x, x);
+ }
+ countrySel.onchange = function(){
+ //Empty districts and States dropdown
+ districtSel.length = 1;
+ stateSel.length = 1;
+ //Display correct values
+ for(var y in addressObject[this.value]){
+ stateSel.options[stateSel.options.length] = new Option(y, y);
+ }
+ }
+ stateSel.onchange = function(){
+ //Empty Districts dropdown
+ districtSel.length = 1;
+ //display correct values
+ var z = addressObject[countrySel.value][this.value];
+ console.log(z);
+ for(var i=0; i<z.length; i++){
+ districtSel.options[districtSel.options.length] = new Option(z[i], 
+z[i]);
+ }
+ }
+}
+//Function to validate First name
+function validateFName(){
+ var fname = document.getElementById('fname').value;
+ if(fname.length == 0){
+ fnameError.innerHTML = ' **First Name is required';
+ return false;
+ }
+ if(!fname.match(/^[A-Za-z]*$/)){
+ fnameError.innerHTML = ' **Numeric is not allowed';
+ return false;
+ }
+ if(fname.length < 3){
+ fnameError.innerHTML = ' **Minimum 3 char required';
+ return false;
+ }
+ if(fname.length > 20){
+ fnameError.innerHTML = ' **First name should be less than 20 char';
+ return false;
+ }
+ fnameError.innerHTML = '<img src="Checkmark.svg" alt="">';
+ return true;
+}
+//Function to validate Last name
+function validateLName(){
+ var lname = document.getElementById('lname').value;
+ if(lname.length == 0){
+ lnameError.innerHTML = ' **Last Name is required';
+ return false;
+ }
+ if(!lname.match(/^[A-Za-z]*$/)){
+ lnameError.innerHTML = ' **Numeric is not allowed';
+ return false;
+ }
+ if(lname.length < 3){
+ lnameError.innerHTML = ' **Minimum 3 char required';
+ return false;
+ }
+ if(lname.length > 20){
+ lnameError.innerHTML = ' **Last name should be less than 20 char';
+ return false;
+ }
+ lnameError.innerHTML = '<img src="Checkmark.svg" alt="">';
+ return true;
+}
+//Function to validate Date of Birth
+function validateDOB(){
+ var dobString = document.getElementById('dob').value;
+ var myDate = new Date();
+ var parts = dobString.split("-");
+ console.log(dobString);
+ console.log(parts);
+ if(dobString == ""){
+ dobError.innerHTML = ' **Date of Birth required';
+ return false;
+ }
+ if(Date.parse(dobString) > Date.parse(myDate.toDateString())){
+ dobError.innerHTML = " **You can't select future date as DOB";
+ return false;
+ }
+ if(myDate.getFullYear() - parts[0] > 24){
+ dobError.innerHTML = ' **Date of Birth should not be greater than 24';
+ return false;
+ }
+ dobError.innerHTML = '<img src="Checkmark.svg" alt="">';
+ return true;
+}
+//Function to validate Email
+function validateEmail(){
+ var emailId = document.getElementById('email-id').value;
+ if(emailId.length == 0){
+ emailError.innerHTML = ' **Email is required';
+ return false;
+ }
+ if(!emailId.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)){
+ emailError.innerHTML = ' **Invalid Email';
+ return false;
+ }
+ emailError.innerHTML = '<img src="Checkmark.svg" alt="">';
+ return true;
+}
+//Function to validate Phone Number
+function validatePhone(){
+ var phoneNum = document.getElementById('phone-no').value;
+ if(phoneNum.length == 0){
+ mobileError.innerHTML = ' **Phone number is required';
+ return false;
+ }
+ if(phoneNum.length !== 10){
+ mobileError.innerHTML = ' **Phone Number should be of 10 digits';
+ return false;
+ }
+ if(!phoneNum.match(/^[0-9]{10}$/)){
+ mobileError.innerHTML = ' **Only digits please';
+ return false;
+ }
+ mobileError.innerHTML = '<img src="Checkmark.svg" alt="">';
+ return true;
+}
+//Function to validate Gender
+function validateGender(){
+ var genderSelected = document.querySelector('input[name = 
+"gender"]:checked');
+ if(genderSelected != null){
+ genderError.innerHTML = '<img src="Checkmark.svg" alt="">';
+ return true;
+ }
+ genderError.innerHTML = ' **Please enter your gender';
+ return false;
+}
+//Function to validate Country Name
+function validateCountry(){
+ var countryName = document.getElementById('country-name').value;
+ if(countryName == ""){
+ countryError.innerHTML = ' **Country name required';
+ return false;
+ }
+ countryError.innerHTML = '<img src="Checkmark.svg" alt="">';
+ return true;
+}
+//Function to validate State Name
+function validateState(){
+ var stateName = document.getElementById('state-name').value;
+ if(stateName == ""){
+ stateError.innerHTML = ' **State name required';
+ return false;
+ }
+ stateError.innerHTML = '<img src="Checkmark.svg" alt="">';
+ return true;
+}
+//Function to validate Address
+function validateAddress(){
+ var address = document.getElementById('address').value;
+ if(address == ""){
+ addressError.innerHTML = ' **Address is required';
+ return false;
+ }
+ addressError.innerHTML = '<img src="Checkmark.svg" alt="">';
+ return true;
+}
+//Function to validate PinCode
+function validatePinCode(){
+ var pinCode = document.getElementById('pincode').value;
+ if(pinCode.length == 0){
+ pinCodeError.innerHTML = ' **PinCode is required';
+ return false;
+ }
+ if(pinCode.length !== 6){
+ pinCodeError.innerHTML = ' **PinCode should be of 6 digits';
+ return false;
+ }
+ if(!pinCode.match(/^[0-9]{6}$/)){
+ pinCodeError.innerHTML = ' **Only digits please';
+ return false;
+ }
+ pinCodeError.innerHTML = '<img src="Checkmark.svg" alt="">';
+ return true;
+}
+//Function to validate City Name
+function validateCity(){
+ var cityName = document.getElementById('city').value;
+ if(cityName == ""){
+ cityError.innerHTML = ' **City name required';
+ return false;
+ }
+ cityError.innerHTML = '<img src="Checkmark.svg" alt="">';
+ return true;
+}
+//Function to validate District Name
+function validateDistrict(){
+ var districtName = document.getElementById('district-name').value;
+ if(districtName == ""){
+ districtError.innerHTML = ' **District name required';
+ return false;
+ }
+ districtError.innerHTML = '<img src="Checkmark.svg" alt="">';
+ return true;
+}
+//Function to validate Hobbies
+function validateHobbies(){
+ var hobbies = document.getElementById('hobbies').value;
+ var requiredChar = 15;
+ var leftChar = requiredChar - hobbies.length;
+ if(leftChar > 0){
+ hobbiesError.innerHTML = leftChar + ' more characters required';
+ return false;
+ }
+ hobbiesError.innerHTML = '<img src="Checkmark.svg" alt="">';
+ return true;
+}
+//Function to validate while the submit button is clicked aby the user
+function validateForm(){
+ if(!validateFName() || !validateLName() || !validateDOB() ||
+ !validateEmail() || !validatePhone() || !validateGender() ||
+ !validateCountry() || !validateState() || !validateAddress() ||
+ !validatePinCode() || !validateCity() || !validateDistrict() ||
+ !validateHobbies()){
+ submitError.innerHTML = 'Please fix the error to submit';
+ return false;
+ }
+}
+</script>
+</body>
+</html>
