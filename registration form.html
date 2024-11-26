@@ -4,7 +4,7 @@
  <meta charset="UTF-8">
  <meta http-equiv="X-UA-Compatible" content="IE=edge">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Registration Form</title>
+ <title> prog08: Student Registration Form</title>
  <style>
  body{
  background-color: #18796c;
@@ -165,6 +165,7 @@ id="hobbies"></textarea>
  </form>
  </div>
  <script>
+
 var fnameError = document.getElementById('fname-error');
 var lnameError = document.getElementById('lname-error');
 var dobError = document.getElementById('dob-error');
@@ -184,8 +185,7 @@ var addressObject = {
  "Assam": ["Bongaigaon", "Jorhat", "Kokrajhar", "Lakhimpur", "Tinsukia", 
 "Kamrup Metropolitan"],
  "Goa": ["North Goa", "South Goa"],
- "Himachal Pradesh": ["Kangra", "Kullu", "Mandi", "Shimla", "Lahaul and 
-Spiti", "Kinnaur"], 
+ "Himachal Pradesh": ["Kangra", "Kullu", "Mandi", "Shimla", "Lahaul and Spiti", "Kinnaur"], 
  "Kerela": ["Kollam", "Malappuram", "Thiruvananthapuram", "Kannur", 
 "Palakkad"], 
  "Tripura": ["Dhalai", "North Tripura", "South Tripura", "West Tripura"],
@@ -200,8 +200,7 @@ Spiti", "Kinnaur"],
  "USA": {
  "Arizona": ["Gila", "Yuma", "Apache", "Mohave", "Santa Cruz", 
 "Greenlee"],
- "California": ["San Francisco", "Los Angeles", "Sacramento", "San 
-Diego", "Riverside", "San Jose"],
+ "California": ["San Francisco", "Los Angeles", "Sacramento", "San Diego", "Riverside", "San Jose"],
  "Georgia": ["Atlanta", "Augusta", "Columbus", "Savannah"],
  "Michigan": ["Watersmeet", "Holland", "Flint", "Holly", "Dearborn"],
  "New York": ["Shirley", "Brooklyn", "Manhattan", "Bronx", "Yonkers"],
@@ -352,8 +351,7 @@ function validatePhone(){
 }
 //Function to validate Gender
 function validateGender(){
- var genderSelected = document.querySelector('input[name = 
-"gender"]:checked');
+ var genderSelected = document.querySelector('input[name = "gender"]:checked');
  if(genderSelected != null){
  genderError.innerHTML = '<img src="Checkmark.svg" alt="">';
  return true;
@@ -452,6 +450,7 @@ function validateForm(){
  return false;
  }
 }
+
 </script>
 </body>
 </html>
